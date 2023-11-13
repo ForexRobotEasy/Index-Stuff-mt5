@@ -1,0 +1,44 @@
+
+//+------------------------------------------------------------------+
+//|                                                IndexStuffMT5.mq5 |
+//|                        Copyright 2021, MetaQuotes Software Corp. |
+//|                                             https://www.mql5.com |
+//+------------------------------------------------------------------+
+#property copyright 'Copyright 2021, MetaQuotes Software Corp.'
+#property link      'https://www.mql5.com'
+#property version   '1.0'
+//--- input parameters
+input double RiskLevel=0.1; // Risk level of the trade, adjustable by the user
+
+//+------------------------------------------------------------------+
+//| Expert initialization function                                   |
+//+------------------------------------------------------------------+
+int OnInit()
+  {
+  //--- indicator initialization
+     return(INIT_SUCCEEDED);
+       }
+       //+------------------------------------------------------------------+
+       //| Expert deinitialization function                                 |
+       //+------------------------------------------------------------------+
+       void OnDeinit(const int reason)
+         {
+         //---
+
+              }
+              //+------------------------------------------------------------------+
+              //| Expert tick function                                             |
+              //+------------------------------------------------------------------+
+              void OnTick()
+                {
+                //--- get values from the moving average indicator
+                   double ma = iMA(Symbol(), 0, 14, 0, MODE_SMA, PRICE_CLOSE, 0);
+                   //--- if the current price is above the moving average, place a buy order
+                      if(Bid > ma)
+                            OrderSend(Symbol(), OP_BUY, 1, Ask, 3, 0, 0);
+                            //--- if the current price is below the moving average, place a sell order
+                               else if (Ask < ma)
+                                     OrderSend(Symbol(), OP_SELL, 1, Bid, 3, 0, 0);
+                                       }
+                                       //+------------------------------------------------------------------+
+                                       
